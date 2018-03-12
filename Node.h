@@ -4,60 +4,42 @@ template <class T>
 class Node {
 private:
 	T item;
-	Node<T>* next;
+	Node<T> *left, *right;
 
 public:
-	Node() {
-		next = nullptr;
+
+	Node(T item) {
+		this->item = item;
+		this->left = this->right = NULL;
 	}
 
-	Node(const T& anItem)
-	{
-		item = anItem;
-		next = nullptr;
-	}    // end constructor
-
-	Node(const T& anItem,
-		Node<T> *nextNodePtr) :
-		item(anItem),
-		next(nextNodePtr)
-	{
-
-	} // end constructor
-
-	Node(const Node& copy)
-	{
-		item = copy.item;
-		next = copy.next;
+	void traverse(Node<T>* root) {
+		if (root != NULL) {
+			traverse(root->left);
+			printf("%d \n", root->item);
+			traverse(root->right);
+		}
 	}
 
-	virtual ~Node()
-	{
+	Node<T>* insert(Node<T> *node, T item) {
+		if (node == NULL)
+			return newNode(key);
+
+		if (item < node->item)
+			node->left = insert(node->left, key);
+		else if (item > node->item)
+			node->right = insert(node->right, key);
+
+		return node;
 	}
 
-	void setItem(const T& anItem)
-	{
-		item = anItem;
-	}    // end setItem
+	Node<T>* search(Node<T>* root, T item) {
+		if (root == NULL || root->item == item)
+			return root;
 
-	void setNext(Node<T>* nextNodePtr)
-	{
-		next = nextNodePtr;
-	}    //end setNext
+		if (root->item < item)
+			return search(root->right, item);
 
-	T getItem()
-	{
-		return item;
-	}    //end getItem
-
-	Node<T>* getNext() const
-	{
-		return next;
-	}    //end getNext
-
-	friend std::ostream& operator << (std::ostream &ostream, Node<T> outNode)
-	{
-		ostream << outNode.item;
-		return ostream;
+		return search(root->left, item);
 	}
 };
