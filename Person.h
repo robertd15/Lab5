@@ -5,7 +5,7 @@ class Person {
 private:
 	std::string fname;	// First Name
 	std::string lname;	// Last Name
-	int birthday;		// Birthday
+	std::string birthday;		// Birthday
 
 public:
 	/*Default Constructor*/
@@ -21,7 +21,7 @@ public:
 	}
 
 	/*Constructor 2*/
-	Person(std::string fname, std::string lname, int birthday)
+	Person(std::string fname, std::string lname, std::string birthday)
 		:fname{fname}, lname{lname}, birthday{birthday}
 	{
 		// Insert any extra conditions here
@@ -43,11 +43,22 @@ public:
 		this->lname = lname;
 	}
 
-	int getBirthday() {
+	std::string getBirthday() {
 		return birthday;
 	}
 
-	void setBirthday(int birthday) {
+	void setBirthday(std::string birthday) {
 		this->birthday = birthday;
+	}
+
+	bool operator>(const Person& other) {
+		if (this->fname >= other.fname)
+			return true;
+		return false;
+	}
+
+	friend ostream& operator<<(ostream& os, const Person& person) {
+		os << person.fname << ' ' << person.lname << ',' << person.birthday;
+		return os;
 	}
 };
